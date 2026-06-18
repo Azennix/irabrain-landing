@@ -423,6 +423,120 @@ height:50px;
 }
 
 
+
+
+
+.video-container{
+
+max-width:1000px;
+
+margin:auto;
+
+}
+
+.video-container video{
+
+width:100%;
+
+
+border-radius:40px;
+
+border:1px solid rgba(255,255,255,.1);
+
+}
+
+.popup{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.8);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:999;
+
+}
+
+.popup-box{
+
+background:#0B1220;
+
+padding:40px;
+
+border-radius:25px;
+
+width:400px;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.popup-box h2{
+
+margin-bottom:15px;
+
+}
+
+.popup-box p{
+
+color:#B8C1EC;
+
+margin-bottom:20px;
+
+}
+
+.popup-box input{
+
+width:100%;
+
+padding:15px;
+
+margin:10px 0;
+
+border:none;
+
+border-radius:10px;
+
+background:#111827;
+
+color:white;
+
+}
+
+.popup-box button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:20px;
+
+border:none;
+
+border-radius:10px;
+
+background:linear-gradient(90deg,#6D5DFE,#00D9FF);
+
+font-weight:700;
+
+color:white;
+
+cursor:pointer;
+
+}
+
 </style>
 
 </head>
@@ -450,7 +564,7 @@ alt="IRABrain"
 
 </div>
 
-<button>
+<button onclick="openPopup()">
 
 Get Early Access
 
@@ -459,6 +573,11 @@ Get Early Access
 </nav>
 
 <section class="hero">
+
+
+
+
+
 
 <h1>
 
@@ -476,21 +595,80 @@ IRABrain is an AI execution engine that helps Gen-Z learn, build, execute and ac
 
 </p>
 
+
 <div class="buttons">
 
-<button class="primary">
+<button
 
-🚀 Join Waitlist
+class="primary"
+
+onclick="openPopup()"
+
+>
+
+🚀 Get Early Access
 
 </button>
 
-<button class="secondary">
+<button
+
+class="secondary"
+
+onclick="scrollToDemo()"
+
+>
 
 ▶ Watch Demo
 
 </button>
 
 </div>
+
+
+
+<section
+
+id="demo"
+
+class="section"
+
+>
+
+<h2 class="section-title">
+
+See IRABrain In Action
+
+</h2>
+
+<div class="video-container">
+
+<video
+
+controls
+
+autoplay
+
+muted
+
+loop
+
+>
+
+<source
+
+src="assets/demo.mp4"
+
+type="video/mp4"
+
+>
+
+</video>
+
+</div>
+
+</section>
+
+
 
 </section>
 
@@ -556,6 +734,59 @@ Builder Mode
 
 </section>
 
+<div
+
+id="popup"
+
+class="popup"
+
+>
+
+<div class="popup-box">
+
+<h2>
+
+🚀 Get Early Access
+
+</h2>
+
+<p>
+
+Join the IRABrain waitlist.
+
+</p>
+
+<input
+
+type="text"
+
+placeholder="Your Name"
+
+>
+
+<input
+
+type="email"
+
+placeholder="Your Email"
+
+>
+
+<button
+
+onclick="joinWaitlist()"
+
+>
+
+Join Now
+
+</button>
+
+</div>
+
+</div>
+
+
 <footer>
 
 <h3>
@@ -571,6 +802,105 @@ irabrain.com
 </p>
 
 </footer>
+
+
+
+
+#java script 
+<script>
+
+function scrollToDemo(){
+
+document
+
+.getElementById("demo")
+
+.scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+}
+
+function openPopup(){
+
+document
+
+.getElementById("popup")
+
+.style.display="flex";
+
+}
+
+async function joinWaitlist(){
+
+const name=
+
+document.querySelector(
+
+'input[type="text"]'
+
+).value;
+
+const email=
+
+document.querySelector(
+
+'input[type="email"]'
+
+).value;
+
+const response=
+
+await fetch(
+
+"http://127.0.0.1:8000/join-waitlist",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+name,
+
+email
+
+})
+
+}
+
+);
+
+const data=
+
+await response.json();
+
+alert(data.message);
+
+document
+
+.getElementById(
+
+"popup"
+
+)
+
+.style.display="none";
+
+}
+
+</script>
+
+
+
 
 </body>
 
